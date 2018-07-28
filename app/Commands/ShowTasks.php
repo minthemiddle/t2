@@ -3,9 +3,10 @@
 namespace App\Commands;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\DB;
 use LaravelZero\Framework\Commands\Command;
 
-class ShowTask extends Command
+class ShowTasks extends Command
 {
     /**
      * The signature of the command.
@@ -13,15 +14,14 @@ class ShowTask extends Command
      * @var string
      */
     protected $signature = 'task:show
-                            {name : The name of the user} // required
-                            {--age= : The age of the user}';
+                            {--type : Filter by type (w/p)}';
 
     /**
      * The description of the command.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Show all tasks';
 
     /**
      * Execute the console command.
@@ -30,7 +30,11 @@ class ShowTask extends Command
      */
     public function handle(): void
     {
-        dd($this->options());
+        $tasks = DB::table('tasks')->get(['title', 'et'])->toArray();
+        dd($tasks);
+        $headers = ['Title', 'ET'];
+
+        $this->table($headers, $tasks);
     }
 
     /**

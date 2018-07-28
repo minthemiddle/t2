@@ -59,7 +59,7 @@ class SaveTask extends Command
 
     $task = DB::table('tasks')->where('created_at', $now)->first();
 
-    Log::error($this->argument('title'));
+    $this->info('This worked!');
     $this->notify($task->title, "ET:" . $task->et . ", I:" . $task->importance . ", U:" . $task->urgency);
 
 
